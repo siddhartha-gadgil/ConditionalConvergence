@@ -7,11 +7,31 @@ import scalatags.JsDom.all._
 
 @JSExport
 object ConditionalConvergence{
-  class BarBox(react : Int => Unit){
-    val box = input(`type` :="number", placeholder := "input integer").render
+  class BarBox(callback : Int => Unit, maxval: Int, minval: Int = 0){
+    var _value : Int = _
     
-    val bar = input(`type` := "range", min := 0, max := 100).render
+    def value: Int = _value
     
+    def value_=(n: Int) = {
+      _value = n
+      box.value = n.toString()
+      bar.value = n.toString
+      callback(n)
+    }
+    
+    val box = input(`type` :="number", placeholder:="int", style := "width:4em").render
+    
+    val bar = input(`type` := "range", min := minval, max := maxval).render
+    
+    box.onchange =(e : dom.Event) => {
+      value_=(box.value.toInt)
+    }
+    
+    bar.onchange = (e: dom.Event) => {
+      value_=(bar.value.toInt)
+    }
+    
+    def divElem = div(bar, box).render
     
   }
   
@@ -71,7 +91,7 @@ object ConditionalConvergence{
     cnvs.width = width;
     implicit val renderer = cnvs.getContext("2d").asInstanceOf[dom.CanvasRenderingContext2D]
     val top = div(p("scala ", i("tags "), "are nice")).render
-    val hello = div(p("Hello there")).render
+    
     /*
     target.appendChild(div(p("scala ", i("tags "), "are nice")).render)
     target.appendChild(cnvs)
@@ -80,7 +100,7 @@ object ConditionalConvergence{
     renderer.fillRect(0, 0, cnvs.width, cnvs.height)    
 //    rawline(0, 0, 300, 100, "red", 3)
     
-    val box = input(`type` :="number", placeholder := "height").render
+    val box = input(`type` :="number", placeholder := "height", style := "width:4em").render
     
     val bar = input(`type` := "range", min := 0, max := 100).render
     
@@ -102,9 +122,13 @@ object ConditionalConvergence{
     } 
     
     
+    val otherinp = new BarBox((n) => line(Point(-300, n), Point(300, n), "magenta", 2), 100, -100)
     
+    otherinp.value = 25
     
-    node(target)(top, cnvs, bar, box, hello)
+    val hello = div(p("Hello there")).render
+    
+    node(target)(top, cnvs, bar, box, hello, otherinp.divElem)
     
  //   Point(0, 0) lineTo Point(100, 100)
     
