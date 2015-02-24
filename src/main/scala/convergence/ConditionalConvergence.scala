@@ -4,10 +4,11 @@ import org.scalajs.dom
 import dom.html
 import scalajs.js.annotation.JSExport
 import scalatags.JsDom.all._
+import scala.math.abs
 
 @JSExport
 object ConditionalConvergence{
-  class BarBox(callback : Int => Unit, maxval: Int, minval: Int = 0){
+  class BarBox(callback : Int => Unit, maxval: Int, minval: Int = 0, prompt: String = ""){
     var _value : Int = _
     
     def value: Int = _value
@@ -31,7 +32,7 @@ object ConditionalConvergence{
       value_=(bar.value.toInt)
     }
     
-    def divElem = div(bar, box).render
+    def divElem = div(strong(style :="font-size:20px")(prompt), bar, box).render
     
   }
   
@@ -80,13 +81,22 @@ object ConditionalConvergence{
     offspring.foreach(parent.appendChild(_))
   }
   
+  def approxSeq(target: Double, error: Double, seq: Stream[Double], sofar: List[Double]) : List[Double] = {
+    val s = sofar.sum
+    if (abs(target - s) < error) sofar 
+    else {
+      if (abs(target -s) < abs(target -s - seq.head)) approxSeq(target, error, seq.tail, sofar) 
+      else  approxSeq(target, error, seq.tail, sofar :+ seq.head)        
+    }
+  }
+  
   @JSExport
   def main(target: html.Div) = {
     val height = 200
     val width = 600
     
     target.innerHTML = ""
-    implicit val cnvs = canvas(style :="border:1px solid #00ffff;").render
+    implicit val cnvs = canvas(style := "border:1px solid #00ffff;").render
     cnvs.height = height;
     cnvs.width = width;
     implicit val renderer = cnvs.getContext("2d").asInstanceOf[dom.CanvasRenderingContext2D]
@@ -122,7 +132,7 @@ object ConditionalConvergence{
     } 
     
     
-    val otherinp = new BarBox((n) => line(Point(-300, n), Point(300, n), "magenta", 2), 100, -100)
+    val otherinp = new BarBox((n) => line(Point(-300, n), Point(300, n), "magenta", 2), 100, -100, "y co-ordinate: ")
     
     otherinp.value = 25
     
