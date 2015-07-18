@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Extinctions</title>
+<style>
+.query{
+  color: blue;
+  display: inline-block;
+  width: 200px;
+  }
+.result{
+  color: red;
+  display: inline-block;
+  width: 200px;
+  }
+</style>
+
+    </style>
+  </head>
+  <body>
+    <h1>Calculating extinctions</h1>
+    <p>
+      We calculate the extinction rates in various epochs.
+    </p>
+
+    <div id="ext"></div>
+
+    <script type="text/javascript" src="../convergence-opt.js"></script>
+    <script>
+        convergence.Extinctions().main(document.getElementById('ext'));
+    </script>
+
+
+
+  </body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Conditional Convergence</title>
+  </head>
+  <body>
+    <h1>Conditional Convergence</h1>
+    <p>
+      We illustrate the result that if a series is conditionally convergent (i.e., convergent but not absoutely convergent), then
+    there is a subseries that converges to any desired real number (target)
+    for the sequence ((-1)^n)/n.
+    </p>
+    <p>
+      Specify the target and the desired accuracy to get a partial sum of a subseries that is within the specified error of the target.
+      Note that this partial sum is obtained by including a term if and only if it results in a better approximation of the target,
+      so as the accuracy tends to zero we do get an infinte subseries (i.e., we get partial sums of a fixed subseries).
+      </p>
+    <br>
+
+    <div id="cc"></div>
+
+    <script type="text/javascript" src="../convergence-fastopt.js"></script>
+    <script type="text/javascript" src="/workbench.js"></script>
+    <script>
+        convergence.ConditionalConvergence().main(document.getElementById('cc'));
+    </script>
+
+    <!--
+    <div id="targ">
+      <b>Target:</b><input id="target">
+      </div>
+      <br>
+    <div id="accuracy">
+      <b>Accuracy (on logarithmic scale):</b> 10 <sup id="exp">-0.0</sup>
+      </div>
+      <div id="accu"></div>
+
+    <br>
+    <button type="button" id="work">Find subsequence</button>
+    <br><br>
+
+    <div>
+    <canvas id="canvas" width="1000" height="200" class="center", style="border:1px solid #00ffff;">
+      </canvas>
+    <br><br>
+    <div style="float:left">
+    Y-scale: <input id="yscale" type="range" min="1" max="2000" value="15">
+    &nbsp; &nbsp;
+    Spacing: <input id="spacing" type="range" min="1" max="100" value="2">
+    </div>
+    </div>
+
+    <br><br>
+    <div id="sample_container_id">
+      <p id="result"></p>
+    </div>
+
+
+
+    <script type="application/dart" src="conditionalconvergence.dart"></script>
+    <script src="packages/browser/dart.js"></script>
+  -->
+
+  </body>
+</html>
