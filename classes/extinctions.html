@@ -4,6 +4,22 @@
   <head>
     <meta charset="utf-8">
     <title>Extinctions</title>
+    <!-- mathjax config similar to math.stackexchange -->
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [ ['$', '$'] ],
+        displayMath: [ ['$$', '$$']],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      messageStyle: "none",
+      "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+    });
+    </script>
+    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript">
+    </script>
 <style>
 .query{
   color: blue;
@@ -25,12 +41,36 @@
       We calculate the extinction rates in various epochs.
     </p>
 
+
+
+
     <div id="ext"></div>
 
     <script type="text/javascript" src="../convergence-opt.js"></script>
     <script>
         convergence.Extinctions().main(document.getElementById('ext'));
     </script>
+
+    <h3> The calculations. </h3>
+    We are given
+    <UL>
+      <li> The total time $T$ in the epoch.</li>
+      <li> The initial population $N_0$.</li>
+      <li> The final population $N_1$.</li>
+      <li> The average lifetime $L$ of a species.</li>
+    </UL>
+    We deduce
+    <UL>
+      <li> The death rate is $d = 1/ L$.</li>
+      <li> The growth rate $\lambda$ is given by $N_1 = N_0 e^{\lambda T}$</li>
+      <li> Let $\rho = log(N_1/N_0)$.</li>
+      <li> Thus $\lamda = \rho /T$.</li>
+      <li> The birth rate is $b = \lambda + d$.</li>
+      <li> As the number of extinctions is $d \bar{N}$ where $N$ is the average population,
+        we deduce that this is $d(N_1 - N_0)/\rho$.</li>
+      <li> We assume speciation takes place by a new species budding of from an existing one.
+        So the rate is half the birth rate, so the number of transitions is $b T/2$.</li>
+      </UL>
 
 
 

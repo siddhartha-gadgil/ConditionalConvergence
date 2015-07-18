@@ -1,0 +1,2 @@
+cp -r ~/code/Convergence/target/scala-2.11/* .
+git push
